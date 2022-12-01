@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import 'rest_exception.dart';
+
 class RestManager {
   static const defaultTimeout = 15000;
 
@@ -10,7 +12,7 @@ class RestManager {
       final response = await _httpClient.get(path);
       return response.data;
     } catch (e) {
-      print(e);
+      throw RestException.parseDioException(e);
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:example/core/rest_manager.dart';
+import 'package:example/core/rest/rest_manager.dart';
 import 'package:example/data/datasource/fetch_data.dart';
 import 'package:example/data/dto/meal.dto.dart';
 
