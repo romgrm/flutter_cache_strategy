@@ -1,7 +1,6 @@
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/repositories/data.repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_strategy/cache_strategy.dart';
 
 void main() {
   runApp(const CacheStrategyExample());
@@ -18,16 +17,10 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
   String test = "";
   final repo = DataRepository();
   List<MealEntity> meals = [];
-  void tryFetchText() {
-    CacheStrategy().defaultSessionName = "hey";
-    print(CacheStrategy().defaultSessionName);
-    test = CacheStrategy().defaultSessionName ?? "";
-  }
 
   @override
   void initState() {
     super.initState();
-    tryFetchText();
   }
 
   @override
