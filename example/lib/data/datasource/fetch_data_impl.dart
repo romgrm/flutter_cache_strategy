@@ -7,9 +7,15 @@ import 'package:example/data/dto/meal.dto.dart';
 class FetchDataImpl implements FetchData {
   final provider = RestManager();
   @override
-  Future<List<MealDto>?> getData() async {
+  Future<List<MealDto>?> getFrenchFood() async {
     final json = await provider.get(path: "https://www.themealdb.com/api/json/v1/1/filter.php?a=French");
-    print(json);
+
+    return List<MealDto>.from(json['meals'].map<MealDto>((meal) => MealDto.fromJson(meal)));
+  }
+
+  @override
+  Future<List<MealDto>?> getEnglishFood() async {
+    final json = await provider.get(path: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian");
 
     return List<MealDto>.from(json['meals'].map<MealDto>((meal) => MealDto.fromJson(meal)));
   }
