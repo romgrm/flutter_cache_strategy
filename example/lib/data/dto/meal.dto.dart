@@ -14,6 +14,8 @@ class MealDto {
     this.strMealThumb,
   });
 
+  static List<MealDto> fromData(dynamic json) => List<MealDto>.from(json?.map<MealDto>((json) => MealDto.fromJson(json)));
+
   factory MealDto.fromJson(Map<String, dynamic> json) => _$MealDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$MealDtoToJson(this);
