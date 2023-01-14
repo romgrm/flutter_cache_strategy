@@ -1,20 +1,19 @@
-import 'package:flutter_cache_strategy/cache_strategy.dart';
-import 'package:flutter_cache_strategy/strategy_builder.dart';
+import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-class MockCacheStrategyManager extends Mock implements CacheStrategy {}
+class MockCacheStrategyManager extends Mock implements CacheStrategyPackage {}
 
-class MockStrategyBuilder extends Mock implements StrategyBuilder {}
+// class MockStrategyBuilder extends Mock implements StrategyBuilder {}
 
 late MockCacheStrategyManager _mockCacheStrategyManager;
-late MockStrategyBuilder _mockStrategyBuilder;
+// late MockStrategyBuilder _mockStrategyBuilder;
 
 void main() {
   setUp(() {
     _mockCacheStrategyManager = MockCacheStrategyManager();
-    _mockStrategyBuilder = MockStrategyBuilder();
+    // _mockStrategyBuilder = MockStrategyBuilder();
   });
 
   group('should retrieved necessary elements to setup CacheStrategymanager', () {
@@ -22,17 +21,17 @@ void main() {
       'should have a class CacheStrategyManager ',
       () async {
         // assert
-        expect(_mockCacheStrategyManager, isA<CacheStrategy>());
+        expect(_mockCacheStrategyManager, isA<CacheStrategyPackage>());
       },
     );
 
-    test(
-      'should have an instance of StrategyBuilder',
-      () async {
-        // assert
+    // test(
+    //   'should have an instance of StrategyBuilder',
+    //   () async {
+    //     // assert
 
-        expect(_mockStrategyBuilder, isA<MockStrategyBuilder>());
-      },
-    );
+    //     expect(_mockStrategyBuilder, isA<MockStrategyBuilder>());
+    //   },
+    // );
   });
 }
