@@ -1,17 +1,24 @@
-import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'cache_strategy.dart';
 import '../storage/cache_storage_impl.dart';
+import 'cache_strategy.dart';
 
 typedef AsyncBloc<T> = Function;
+
 typedef SerializerBloc<T> = Function(dynamic);
 
 class CacheManager {
-  final CacheStorage cacheStorage;
+  late CacheStorage cacheStorage;
 
-  CacheManager(this.cacheStorage);
+  factory CacheManager(CacheStorage cacheStorage) {
+    instance.cacheStorage = cacheStorage;
+    return instance;
+  }
+
+  CacheManager._internal();
+
+  static final CacheManager instance = CacheManager._internal();
 
   String? defaultSessionName;
 
@@ -31,10 +38,13 @@ class CacheManager {
 }
 
 class StrategyBuilder<T> {
-  final String _key;
-  final CacheStorage _cacheStorage;
+  late String _key;
+  late CacheStorage _cacheStorage;
 
-  StrategyBuilder(this._key, this._cacheStorage);
+  StrategyBuilder(String key, CacheStorage cacheStorage) {
+    _key = key;
+    _cacheStorage = cacheStorage;
+  }
 
   late AsyncBloc<T> _asyncBloc;
   late SerializerBloc<T> _serializerBloc;

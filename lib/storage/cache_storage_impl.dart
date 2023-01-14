@@ -5,7 +5,9 @@ import 'storage.dart';
 class CacheStorage implements Storage {
   static const _hiveBoxName = "cache";
 
-  CacheStorage() {}
+  CacheStorage._internal();
+
+  static final CacheStorage instance = CacheStorage._internal();
 
   @override
   Future<void> clear({String? prefix}) async {
