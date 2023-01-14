@@ -1,5 +1,6 @@
 import 'package:example/data/domain/meal.entity.dart';
-import 'package:example/data/repositories/data.repository.dart';
+import 'package:example/data/repositories/english_food.repository.dart';
+import 'package:example/data/repositories/french_food.repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,32 +15,44 @@ class CacheStrategyExample extends StatefulWidget {
 }
 
 class _CacheStrategyExampleState extends State<CacheStrategyExample> {
-  String test = "";
-  final repo = DataRepository();
-  List<MealEntity> meals = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final frenchRepo = FrenchFoodRepository();
+  final englishRepo = EnglishFoodRepository();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            body: Center(
-                child: FutureBuilder(
-                    future: repo.getData(),
-                    builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: ((context, index) {
-                              return Text(snapshot.data![index].strMeal);
-                            }));
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    })))));
+            body: Row(
+      children: [
+        Expanded(
+            child: FutureBuilder(
+                future: frenchRepo.getData(),
+                builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: ((context, index) {
+                          return Text(snapshot.data![index].strMeal);
+                        }));
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                }))),
+        Expanded(
+            child: FutureBuilder(
+                future: englishRepo.getEnglishFood(),
+                builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: ((context, index) {
+                          return Text(snapshot.data![index].strMeal);
+                        }));
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                }))),
+      ],
+    )));
   }
 }
