@@ -11,7 +11,7 @@ abstract class CacheStrategy {
 
   Future _storeCacheData<T>(String key, T value, Storage storage) async {
     final cacheWrapper = CacheWrapper<T>(value, DateTime.now().millisecondsSinceEpoch);
-    await storage.write(key, jsonEncode(cacheWrapper.toJsonObject())); // toJsonObject() rename
+    await storage.write(key, jsonEncode(cacheWrapper.toJsonObject()));
   }
 
   _isValid<T>(CacheWrapper<T> cacheWrapper, bool keepExpiredCache, int ttlValue) => keepExpiredCache || DateTime.now().millisecondsSinceEpoch < cacheWrapper.cachedDate + ttlValue;
