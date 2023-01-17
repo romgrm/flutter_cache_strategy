@@ -14,13 +14,14 @@ class CacheStrategyPackage {
   static final CacheStrategyPackage instance = CacheStrategyPackage._internal();
 
   Future execute({required String defaultSessionName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy}) async {
+  Future execute(
+      {required String keyCache, String? boxeName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy, int? timeToLiveValue = 60 * 60 * 1000}) async {
     _cacheStorage = CacheStorage.instance;
-    _cacheManager = CacheManager(_cacheStorage);
+    _cacheManager = CacheManager(_cacheStorage, boxeName);
 
-    assert(defaultSessionName.isNotEmpty);
-
+    assert(keyCache.isNotEmpty);
     try {
-      return await _cacheManager.from(defaultSessionName).withSerializer(serializer).withAsync(async).withStrategy(strategy).execute();
+      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).execute();
     } catch (e) {
       rethrow;
     }

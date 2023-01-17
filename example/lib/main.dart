@@ -1,6 +1,6 @@
 import 'package:example/data/domain/meal.entity.dart';
-import 'package:example/data/repositories/english_food.repository.dart';
-import 'package:example/data/repositories/french_food.repository.dart';
+import 'package:example/data/repositories/european_food.repository.dart';
+import 'package:example/data/repositories/indian_food.repository.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +15,8 @@ class CacheStrategyExample extends StatefulWidget {
 }
 
 class _CacheStrategyExampleState extends State<CacheStrategyExample> {
-  final frenchRepo = FrenchFoodRepository();
-  final englishRepo = EnglishFoodRepository();
+  final indianRepo = IndianFoodRepository();
+  final europeanRepo = EuropeanFoodRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
       children: [
         Expanded(
             child: FutureBuilder(
-                future: frenchRepo.getData(),
+                future: indianRepo.getIndianFood(),
                 builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -40,7 +40,7 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                 }))),
         Expanded(
             child: FutureBuilder(
-                future: englishRepo.getEnglishFood(),
+                future: europeanRepo.getEuropeanFood(),
                 builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -52,6 +52,29 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                     return const CircularProgressIndicator();
                   }
                 }))),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+                onPressed: () {
+                  europeanRepo.clear(keyCache: "frenchFood");
+                  setState(() {});
+                },
+                child: const Text("clean just french food")),
+            OutlinedButton(
+                onPressed: () {
+                  europeanRepo.clear(keyCache: "italianFood");
+                  setState(() {});
+                },
+                child: const Text("clean just italian food")),
+            OutlinedButton(
+                onPressed: () {
+                  europeanRepo.clear();
+                  setState(() {});
+                },
+                child: const Text("clean just BOXE 1")),
+          ],
+        ),
       ],
     )));
   }

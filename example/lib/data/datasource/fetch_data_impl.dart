@@ -14,8 +14,15 @@ class FetchDataImpl implements FetchData {
   }
 
   @override
-  Future<List<MealDto>?> getEnglishFood() async {
-    final json = await provider.get(path: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian");
+  Future<List<MealDto>?> getItalianFood() async {
+    final json = await provider.get(path: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Italian");
+
+    return List<MealDto>.from(json['meals'].map<MealDto>((meal) => MealDto.fromJson(meal)));
+  }
+
+  @override
+  Future<List<MealDto>?> getIndianFood() async {
+    final json = await provider.get(path: "https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian");
 
     return List<MealDto>.from(json['meals'].map<MealDto>((meal) => MealDto.fromJson(meal)));
   }

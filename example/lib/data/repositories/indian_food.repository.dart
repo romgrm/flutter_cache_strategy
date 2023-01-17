@@ -6,18 +6,20 @@ import 'package:example/main.dart';
 import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
 import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 
-class FrenchFoodRepository {
+class IndianFoodRepository {
   final provider = FetchDataImpl();
-  Future<List<MealEntity>> getData() async {
-    final List<MealDto.MealDto>? testFrench = await CacheStrategyPackage.instance.execute(
-      defaultSessionName: "ho",
+
+  Future<List<MealEntity>> getIndianFood() async {
+    final List<MealDto.MealDto>? indianFood = await CacheStrategyPackage.instance.execute(
+      keyCache: "indianFood",
+      boxeName: "BOXE 2",
       serializer: (p0) => MealDto.MealDto.fromData(p0),
-      async: () => provider.getFrenchFood(),
+      async: provider.getIndianFood(),
       strategy: AsyncOrCacheStrategy(),
     );
 
-    if (testFrench != null) {
-      return List<MealEntity>.from(testFrench.map((mealDto) => mealDto.toEntity()));
+    if (indianFood != null) {
+      return List<MealEntity>.from(indianFood.map((mealDto) => mealDto.toEntity()));
     }
     return [];
   }
