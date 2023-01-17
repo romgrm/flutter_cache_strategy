@@ -1,5 +1,6 @@
 import 'package:example/data/datasource/fetch_data_impl.dart';
 import 'package:example/data/domain/meal.entity.dart';
+import 'package:example/data/dto/isar_test.dto.dart';
 import 'package:example/data/dto/meal.dto.dart' as MealDto;
 import 'package:example/main.dart';
 
@@ -10,12 +11,8 @@ class EnglishFoodRepository {
   final provider = FetchDataImpl();
 
   Future<List<MealEntity>> getEnglishFood() async {
-    final List<MealDto.MealDto>? testEnglish = await CacheStrategyPackage.instance.execute(
-      defaultSessionName: "hey",
-      serializer: (p0) => MealDto.MealDto.fromData(p0),
-      async: () => provider.getEnglishFood(),
-      strategy: AsyncOrCacheStrategy(),
-    );
+    final List<MealDto.MealDto>? testEnglish = await CacheStrategyPackage.instance
+        .execute(defaultSessionName: "hey", serializer: (p0) => MealDto.MealDto.fromData(p0), async: () => provider.getEnglishFood(), strategy: AsyncOrCacheStrategy(), schema: IsarTestDtoSchema);
 
     print(identical(CacheStrategyPackage.instance, CacheStrategyPackage.instance));
 

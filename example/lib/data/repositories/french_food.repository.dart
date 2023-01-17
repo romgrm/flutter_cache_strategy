@@ -9,7 +9,7 @@ import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 class FrenchFoodRepository {
   final provider = FetchDataImpl();
   Future<List<MealEntity>> getData() async {
-    final List<MealDto.MealDto>? testFrench = await CacheStrategyPackage.instance.execute(
+    /* final List<MealDto.MealDto>? testFrench = await CacheStrategyPackage.instance.execute(
       defaultSessionName: "ho",
       serializer: (p0) => MealDto.MealDto.fromData(p0),
       async: () => provider.getFrenchFood(),
@@ -18,7 +18,7 @@ class FrenchFoodRepository {
 
     if (testFrench != null) {
       return List<MealEntity>.from(testFrench.map((mealDto) => mealDto.toEntity()));
-    }
+    } */
     return [];
   }
 }

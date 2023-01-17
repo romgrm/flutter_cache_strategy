@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 
 import 'storage.dart';
 
@@ -11,6 +12,8 @@ class CacheStorage implements Storage {
 
   @override
   Future<void> clear({String? prefix}) async {
+    // final isar = await Isar.open(schemas)
+
     final box = await Hive.openBox(_hiveBoxName);
     if (prefix == null) {
       await box.clear();
