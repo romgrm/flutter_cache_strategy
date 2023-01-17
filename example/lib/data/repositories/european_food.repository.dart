@@ -18,6 +18,7 @@ class EuropeanFoodRepository {
       serializer: (p0) => MealDto.MealDto.fromData(p0),
       async: provider.getItalianFood(),
       strategy: AsyncOrCacheStrategy(),
+      timeToLiveValue: 140000,
     );
     final List<MealDto.MealDto>? frenchFood = await _package.execute(
       keyCache: "frenchFood",

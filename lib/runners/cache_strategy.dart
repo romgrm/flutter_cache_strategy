@@ -7,8 +7,6 @@ import 'cache_wrapper.dart';
 import '../storage/storage.dart';
 
 abstract class CacheStrategy {
-  static const defaultTTLValue = 60 * 60 * 1000;
-
   Future _storeCacheData<T>(String keyCache, String boxeName, T value, Storage storage) async {
     final cacheWrapper = CacheWrapper<T>(value, DateTime.now().millisecondsSinceEpoch);
     await storage.write(keyCache, jsonEncode(cacheWrapper.toJsonObject()), boxeName);
@@ -22,7 +20,7 @@ abstract class CacheStrategy {
     return asyncData;
   }
 
-  Future<T?> fetchCacheData<T>(String keyCache, String boxeName, SerializerBloc serializerBloc, Storage storage, {bool keepExpiredCache = false, int ttlValue = defaultTTLValue}) async {
+  Future<T?> fetchCacheData<T>(String keyCache, String boxeName, SerializerBloc serializerBloc, Storage storage, int ttlValue, {bool keepExpiredCache = false}) async {
     final value = await storage.read(keyCache, boxeName);
     if (value != null) {
       final cacheWrapper = CacheWrapper.fromJson(jsonDecode(value));

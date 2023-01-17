@@ -35,11 +35,11 @@ class CacheManager {
 class StrategyBuilder<T> {
   late String _keyCache;
   late String _boxeName;
+  late int _ttlValue;
   late CacheStorage _cacheStorage;
   late AsyncBloc<T> _asyncBloc;
   late SerializerBloc<T> _serializerBloc;
   late CacheStrategy _strategy;
-  int _ttlValue = CacheStrategy.defaultTTLValue;
 
   StrategyBuilder(String keyCache, CacheStorage cacheStorage) {
     _keyCache = keyCache;
