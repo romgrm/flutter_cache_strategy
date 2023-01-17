@@ -16,6 +16,9 @@ class CacheStrategyPackage {
   Future execute({required String defaultSessionName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy}) async {
     _cacheStorage = CacheStorage.instance;
     _cacheManager = CacheManager(_cacheStorage);
+
+    assert(defaultSessionName.isNotEmpty);
+
     try {
       return await _cacheManager.from(defaultSessionName).withSerializer(serializer).withAsync(async).withStrategy(strategy).execute();
     } catch (e) {
