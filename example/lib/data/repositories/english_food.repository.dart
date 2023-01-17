@@ -13,7 +13,7 @@ class EnglishFoodRepository {
     final List<MealDto.MealDto>? testEnglish = await CacheStrategyPackage.instance.execute(
       defaultSessionName: "hey",
       serializer: (p0) => MealDto.MealDto.fromData(p0),
-      async: () => provider.getEnglishFood(),
+      async: provider.getEnglishFood(),
       strategy: AsyncOrCacheStrategy(),
     );
 

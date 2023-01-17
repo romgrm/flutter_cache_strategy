@@ -4,7 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import '../storage/cache_storage_impl.dart';
 import 'cache_strategy.dart';
 
-typedef AsyncBloc<T> = Function;
+typedef AsyncBloc<T> = Future;
 
 typedef SerializerBloc<T> = Function(dynamic);
 
