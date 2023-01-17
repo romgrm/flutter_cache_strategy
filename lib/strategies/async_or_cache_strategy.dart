@@ -2,6 +2,7 @@ import '../runners/cache_manager.dart';
 import '../runners/cache_strategy.dart';
 import '../storage/storage.dart';
 
+/// First, triggering the remote call, if an error is throw, the strategy will trigger the [fetchCacheData] which will attempt to retrieve the corresponding data stored in the cache.
 class AsyncOrCacheStrategy extends CacheStrategy {
   static final AsyncOrCacheStrategy _instance = AsyncOrCacheStrategy._internal();
 
@@ -16,17 +17,5 @@ class AsyncOrCacheStrategy extends CacheStrategy {
     return await invokeAsync(asyncBloc, keyCache, boxeName, storage).onError((err, stack) async {
       return await fetchCacheData(keyCache, boxeName, serializerBloc, storage, ttlValue: ttlValue) ?? Future.error(err!);
     });
-    // return await invokeAsync(asyncBloc, key, storage).onError(
-    //   (Error restError, stackTrace) async {
-    //     return await fetchCacheData(key, serializerBloc, storage, ttlValue: ttlValue) ?? Future.error(restError);
-
-    //     /* if (restError == 403 || restError == 404) {
-    //         storage.clear(prefix: key);
-    //         return Future.error(restError);
-    //       } else {
-    //         return await fetchCacheData(key, serializerBloc, storage, ttlValue: ttlValue) ?? Future.error(restError);
-    //       } */
-    //   },
-    // );
   }
 }
