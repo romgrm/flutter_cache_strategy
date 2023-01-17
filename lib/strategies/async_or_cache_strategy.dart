@@ -12,9 +12,9 @@ class AsyncOrCacheStrategy extends CacheStrategy {
   AsyncOrCacheStrategy._internal();
 
   @override
-  Future<T?> applyStrategy<T>(AsyncBloc<T> asyncBloc, String key, SerializerBloc<T> serializerBloc, int ttlValue, Storage storage) async {
-    return await invokeAsync(asyncBloc, key, storage).onError((err, stack) async {
-      return await fetchCacheData(key, serializerBloc, storage, ttlValue: ttlValue) ?? Future.error(err!);
+  Future<T?> applyStrategy<T>(AsyncBloc<T> asyncBloc, String keyCache, String boxeName, SerializerBloc<T> serializerBloc, int ttlValue, Storage storage) async {
+    return await invokeAsync(asyncBloc, keyCache, boxeName, storage).onError((err, stack) async {
+      return await fetchCacheData(keyCache, boxeName, serializerBloc, storage, ttlValue: ttlValue) ?? Future.error(err!);
     });
     // return await invokeAsync(asyncBloc, key, storage).onError(
     //   (Error restError, stackTrace) async {
