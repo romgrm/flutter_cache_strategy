@@ -3,20 +3,18 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'storage.dart';
 
 class CacheStorage implements Storage {
-  static const _hiveBoxName = "cache";
-
   CacheStorage._internal();
 
   static final CacheStorage instance = CacheStorage._internal();
 
   @override
-  Future<void> clear({String? prefix}) async {
-    final box = await Hive.openBox(_hiveBoxName);
-    if (prefix == null) {
+  Future<void> clear({String? keyCache, required String boxeName}) async {
+    final box = await Hive.openBox(boxeName);
+    if (keyCache == null) {
       await box.clear();
     } else {
       for (var key in box.keys) {
-        if (key is String && key.startsWith(prefix)) {
+        if (key is String && key.startsWith(keyCache)) {
           await box.delete(key);
         }
       }
@@ -24,32 +22,32 @@ class CacheStorage implements Storage {
   }
 
   @override
-  Future<void> delete(String key) async {
-    final box = await Hive.openBox(_hiveBoxName);
-    return box.delete(key);
+  Future<void> delete(String keyCache, String boxeName) async {
+    final box = await Hive.openBox(boxeName);
+    return box.delete(keyCache);
   }
 
   @override
-  Future<String?> read(String key) async {
-    final box = await Hive.openBox(_hiveBoxName);
-    return box.get(key);
+  Future<String?> read(String keyCache, String boxeName) async {
+    final box = await Hive.openBox(boxeName);
+    return box.get(keyCache);
   }
 
   @override
-  Future<void> write(String key, String value) async {
-    final box = await Hive.openBox(_hiveBoxName);
-    return box.put(key, value);
+  Future<void> write(String keyCache, String value, String boxeName) async {
+    final box = await Hive.openBox(boxeName);
+    return box.put(keyCache, value);
   }
 
   @override
-  Future<int> count({String? prefix}) async {
-    final box = await Hive.openBox(_hiveBoxName);
-    if (prefix == null) {
+  Future<int> count({String? keyCache, required String boxeName}) async {
+    final box = await Hive.openBox(boxeName);
+    if (keyCache == null) {
       return box.length;
     } else {
       var count = 0;
       for (var key in box.keys) {
-        if (key is String && key.startsWith(prefix)) {
+        if (key is String && key.startsWith(keyCache)) {
           count++;
         }
       }
