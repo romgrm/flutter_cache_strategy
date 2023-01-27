@@ -1,18 +1,18 @@
 library flutter_cache_strategy;
 
 import 'package:flutter_cache_strategy/runners/cache_manager.dart';
-
 import 'package:flutter_cache_strategy/runners/cache_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/cache_or_async_strategy.dart';
-import 'package:flutter_cache_strategy/strategies/just_cache_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/just_async_strategy.dart';
+import 'package:flutter_cache_strategy/strategies/just_cache_strategy.dart';
 
 import 'storage/cache_storage_impl.dart';
 
 class CacheStrategyPackage {
   late CacheStorage _cacheStorage;
   static late CacheManager _cacheManager;
+  late bool _isEncryptedTest;
 
   factory CacheStrategyPackage() {
     return instance;
@@ -35,16 +35,26 @@ class CacheStrategyPackage {
   ///
   /// **[timeToLiveValue]** The time during which the stored data will be valid. Once this value is exceeded, the cache will no longer be valid.
   /// If no value is set, the default value is 360000 milliseconds, equivalent to **1 hour**.
+  ///
+  /// **[isEncrypted]** If it set on *true*, the boxe where stored data will be encrypted with [HiveAesCipher].
+  ///
   Future execute(
-      {required String keyCache, String? boxeName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy, int timeToLiveValue = 60 * 60 * 1000}) async {
+      {required String keyCache,
+      String? boxeName,
+      required SerializerBloc serializer,
+      required AsyncBloc async,
+      required CacheStrategy strategy,
+      int timeToLiveValue = 60 * 60 * 1000,
+      bool isEncrypted = false}) async {
     _cacheStorage = CacheStorage();
     _cacheManager = CacheManager(_cacheStorage, boxeName);
+    _isEncryptedTest = isEncrypted;
 
     assert(keyCache.isNotEmpty);
     assert(timeToLiveValue > 60000);
 
     try {
-      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).execute();
+      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).withEncryption(isEncrypted).execute();
     } catch (e) {
       rethrow;
     }
@@ -56,7 +66,7 @@ class CacheStrategyPackage {
   ///
   /// If other boxes are cached, **they will not be impacted**.
   Future<void> clearCache({String? keyCache}) async {
-    await _cacheManager.clear(keyCache: keyCache);
+    await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncryptedTest);
   }
 }
 
