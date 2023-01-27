@@ -12,7 +12,7 @@ class IndianFoodRepository {
   Future<List<MealEntity>> getIndianFood() async {
     final List<MealDto.MealDto>? indianFood = await CacheStrategyPackage.instance.execute(
       keyCache: "indianFood",
-      boxeName: "BOXE 2",
+      boxeName: "BOXE NOT ENCRYPTED",
       serializer: (p0) => MealDto.MealDto.fromData(p0),
       async: provider.getIndianFood(),
       strategy: AsyncOrCacheStrategy(),
