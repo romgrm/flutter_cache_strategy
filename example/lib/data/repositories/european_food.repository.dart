@@ -9,7 +9,7 @@ import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 class EuropeanFoodRepository {
   final provider = FetchDataImpl();
 
-  final _package = CacheStrategyPackage.instance;
+  final _package = CacheStrategyPackage();
 
   Future<List<MealEntity>> getEuropeanFood() async {
     final List<MealDto.MealDto>? italianFood = await _package.execute(
@@ -18,6 +18,7 @@ class EuropeanFoodRepository {
       serializer: (p0) => MealDto.MealDto.fromData(p0),
       async: provider.getItalianFood(),
       strategy: AsyncOrCacheStrategy(),
+      timeToLiveValue: 140000,
     );
     final List<MealDto.MealDto>? frenchFood = await _package.execute(
       keyCache: "frenchFood",

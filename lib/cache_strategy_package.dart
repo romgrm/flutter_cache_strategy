@@ -14,6 +14,10 @@ class CacheStrategyPackage {
   late CacheStorage _cacheStorage;
   static late CacheManager _cacheManager;
 
+  factory CacheStrategyPackage() {
+    return instance;
+  }
+
   CacheStrategyPackage._internal();
 
   static final CacheStrategyPackage instance = CacheStrategyPackage._internal();
@@ -32,13 +36,15 @@ class CacheStrategyPackage {
   /// **[timeToLiveValue]** The time during which the stored data will be valid. Once this value is exceeded, the cache will no longer be valid.
   /// If no value is set, the default value is 360000 milliseconds, equivalent to **1 hour**.
   Future execute(
-      {required String keyCache, String? boxeName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy, int? timeToLiveValue = 60 * 60 * 1000}) async {
+      {required String keyCache, String? boxeName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy, int timeToLiveValue = 60 * 60 * 1000}) async {
     _cacheStorage = CacheStorage.instance;
     _cacheManager = CacheManager(_cacheStorage, boxeName);
 
     assert(keyCache.isNotEmpty);
+    assert(timeToLiveValue > 60000);
+
     try {
-      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).execute();
+      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).execute();
     } catch (e) {
       rethrow;
     }
