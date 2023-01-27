@@ -37,7 +37,7 @@ class CacheStrategyPackage {
   /// If no value is set, the default value is 360000 milliseconds, equivalent to **1 hour**.
   Future execute(
       {required String keyCache, String? boxeName, required SerializerBloc serializer, required AsyncBloc async, required CacheStrategy strategy, int timeToLiveValue = 60 * 60 * 1000}) async {
-    _cacheStorage = CacheStorage.instance;
+    _cacheStorage = CacheStorage();
     _cacheManager = CacheManager(_cacheStorage, boxeName);
 
     assert(keyCache.isNotEmpty);

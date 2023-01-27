@@ -1,11 +1,15 @@
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'storage.dart';
 
 class CacheStorage implements Storage {
   CacheStorage._internal();
 
   static final CacheStorage instance = CacheStorage._internal();
+
+  factory CacheStorage() {
+    Hive.initFlutter();
+    return instance;
+  }
 
   @override
   Future<void> clear({String? keyCache, required String boxeName}) async {

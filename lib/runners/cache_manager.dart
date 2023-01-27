@@ -1,6 +1,3 @@
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../storage/cache_storage_impl.dart';
 import 'cache_strategy.dart';
 
@@ -74,9 +71,6 @@ class StrategyBuilder<T> {
   String buildSessionKey(String keyCache) => "${_boxeName}_$_keyCache";
 
   Future<T?> execute() async {
-    final appDocumentDirectory = await getApplicationDocumentsDirectory();
-
-    await Hive.initFlutter(appDocumentDirectory.path);
     try {
       return await _strategy.applyStrategy<T?>(_asyncBloc, buildSessionKey(_keyCache), _boxeName, _serializerBloc, _ttlValue, _cacheStorage);
     } catch (exception) {
