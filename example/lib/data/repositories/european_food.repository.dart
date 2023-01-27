@@ -9,7 +9,7 @@ import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 class EuropeanFoodRepository {
   final provider = FetchDataImpl();
 
-  final _package = CacheStrategyPackage.instance;
+  final _package = CacheStrategyPackage();
 
   Future<List<MealEntity>> getEuropeanFood() async {
     final List<MealDto.MealDto>? italianFood = await _package.execute(

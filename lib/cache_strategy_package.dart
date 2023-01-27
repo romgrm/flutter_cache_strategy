@@ -14,6 +14,10 @@ class CacheStrategyPackage {
   late CacheStorage _cacheStorage;
   static late CacheManager _cacheManager;
 
+  factory CacheStrategyPackage() {
+    return instance;
+  }
+
   CacheStrategyPackage._internal();
 
   static final CacheStrategyPackage instance = CacheStrategyPackage._internal();
