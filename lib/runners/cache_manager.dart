@@ -1,6 +1,3 @@
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../storage/cache_storage_impl.dart';
 import 'cache_strategy.dart';
 
@@ -24,11 +21,11 @@ class CacheManager {
 
   StrategyBuilder from<T>(String keyCache) => StrategyBuilder<T>(keyCache, cacheStorage).withBoxeName(instance._boxeName);
 
-  Future clear({String? keyCache}) async {
+  Future clear({String? keyCache, required bool isEncrypted}) async {
     if (keyCache != null) {
       keyCache = "${_boxeName}_$keyCache";
     }
-    await cacheStorage.clear(keyCache: keyCache, boxeName: instance._boxeName);
+    await cacheStorage.clear(keyCache: keyCache, boxeName: instance._boxeName, isEncrypted: isEncrypted);
   }
 }
 
@@ -40,6 +37,7 @@ class StrategyBuilder<T> {
   late AsyncBloc<T> _asyncBloc;
   late SerializerBloc<T> _serializerBloc;
   late CacheStrategy _strategy;
+  late bool _isEncrypted;
 
   StrategyBuilder(String keyCache, CacheStorage cacheStorage) {
     _keyCache = keyCache;
@@ -71,14 +69,16 @@ class StrategyBuilder<T> {
     return this;
   }
 
+  StrategyBuilder withEncryption(bool isEncrypted) {
+    _isEncrypted = isEncrypted;
+    return this;
+  }
+
   String buildSessionKey(String keyCache) => "${_boxeName}_$_keyCache";
 
   Future<T?> execute() async {
-    final appDocumentDirectory = await getApplicationDocumentsDirectory();
-
-    await Hive.initFlutter(appDocumentDirectory.path);
     try {
-      return await _strategy.applyStrategy<T?>(_asyncBloc, buildSessionKey(_keyCache), _boxeName, _serializerBloc, _ttlValue, _cacheStorage);
+      return await _strategy.applyStrategy<T?>(_asyncBloc, buildSessionKey(_keyCache), _boxeName, _serializerBloc, _ttlValue, _cacheStorage, _isEncrypted);
     } catch (exception) {
       return null;
     }
