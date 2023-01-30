@@ -12,7 +12,7 @@ import 'storage/cache_storage_impl.dart';
 class CacheStrategyPackage {
   late CacheStorage _cacheStorage;
   static late CacheManager _cacheManager;
-  late bool _isEncryptedTest;
+  late bool _isEncrypted;
 
   factory CacheStrategyPackage() {
     return instance;
@@ -48,7 +48,7 @@ class CacheStrategyPackage {
       bool isEncrypted = false}) async {
     _cacheStorage = CacheStorage();
     _cacheManager = CacheManager(_cacheStorage, boxeName);
-    _isEncryptedTest = isEncrypted;
+    _isEncrypted = isEncrypted;
 
     assert(keyCache.isNotEmpty);
     assert(timeToLiveValue > 60000);
@@ -66,7 +66,7 @@ class CacheStrategyPackage {
   ///
   /// If other boxes are cached, **they will not be impacted**.
   Future<void> clearCache({String? keyCache}) async {
-    await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncryptedTest);
+    await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncrypted);
   }
 }
 
