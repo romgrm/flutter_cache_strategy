@@ -1,4 +1,4 @@
-import 'package:flutter_cache_strategy/cache_strategy_package.dart';
+import 'package:flutter_cache_strategy/src/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';

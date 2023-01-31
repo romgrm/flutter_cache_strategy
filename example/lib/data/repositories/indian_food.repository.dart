@@ -2,7 +2,6 @@ import 'package:example/data/datasource/fetch_data_impl.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/dto/meal.dto.dart' as meal_dto;
 
-import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
 import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 
 class IndianFoodRepository {

@@ -1,14 +1,11 @@
-library flutter_cache_strategy;
-
-import 'package:flutter_cache_strategy/runners/cache_manager.dart';
-import 'package:flutter_cache_strategy/runners/cache_strategy.dart';
-import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
-import 'package:flutter_cache_strategy/strategies/cache_or_async_strategy.dart';
-import 'package:flutter_cache_strategy/strategies/just_async_strategy.dart';
-import 'package:flutter_cache_strategy/strategies/just_cache_strategy.dart';
-import 'package:flutter_cache_strategy/utils/cache_strategy_error.dart';
-
+import 'runners/cache_manager.dart';
+import 'runners/cache_strategy.dart';
 import 'storage/cache_storage_impl.dart';
+import 'strategies/async_or_cache_strategy.dart';
+import 'strategies/cache_or_async_strategy.dart';
+import 'strategies/just_async_strategy.dart';
+import 'strategies/just_cache_strategy.dart';
+import 'utils/cache_strategy_error.dart';
 
 class CacheStrategyPackage {
   late CacheStorage _cacheStorage;

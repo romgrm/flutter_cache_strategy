@@ -1,7 +1,6 @@
-import 'package:flutter_cache_strategy/storage/storage.dart';
-
 import '../runners/cache_manager.dart';
 import '../runners/cache_strategy.dart';
+import '../storage/storage.dart';
 
 /// Just call the remote with the usual Rest behaviour.
 class JustAsyncStrategy extends CacheStrategy {
