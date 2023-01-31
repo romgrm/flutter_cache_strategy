@@ -21,7 +21,7 @@ class CacheManager {
 
   StrategyBuilder from<T>(String keyCache) => StrategyBuilder<T>(keyCache, cacheStorage).withBoxeName(instance._boxeName);
 
-  Future clear({String? keyCache, required bool isEncrypted}) async {
+  Future<void> clear({String? keyCache, required bool isEncrypted}) async {
     if (keyCache != null) {
       keyCache = "${_boxeName}_$keyCache";
     }
@@ -80,7 +80,7 @@ class StrategyBuilder<T> {
     try {
       return await _strategy.applyStrategy<T?>(_asyncBloc, buildSessionKey(_keyCache), _boxeName, _serializerBloc, _ttlValue, _cacheStorage, _isEncrypted);
     } catch (exception) {
-      return null;
+      rethrow;
     }
   }
 }

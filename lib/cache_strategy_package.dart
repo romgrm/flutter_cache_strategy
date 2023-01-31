@@ -6,6 +6,7 @@ import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/cache_or_async_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/just_async_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/just_cache_strategy.dart';
+import 'package:flutter_cache_strategy/utils/cache_strategy_error.dart';
 
 import 'storage/cache_storage_impl.dart';
 
@@ -66,7 +67,11 @@ class CacheStrategyPackage {
   ///
   /// If other boxes are cached, **they will not be impacted**.
   Future<void> clearCache({String? keyCache}) async {
-    await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncrypted);
+    try {
+      await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncrypted);
+    } catch (e) {
+      throw CacheStrategyError("The data from $keyCache couldn't be deleted");
+    }
   }
 }
 
