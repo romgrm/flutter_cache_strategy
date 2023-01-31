@@ -6,13 +6,14 @@ import 'package:flutter_cache_strategy/strategies/async_or_cache_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/cache_or_async_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/just_async_strategy.dart';
 import 'package:flutter_cache_strategy/strategies/just_cache_strategy.dart';
+import 'package:flutter_cache_strategy/utils/cache_strategy_error.dart';
 
 import 'storage/cache_storage_impl.dart';
 
 class CacheStrategyPackage {
   late CacheStorage _cacheStorage;
   static late CacheManager _cacheManager;
-  late bool _isEncryptedTest;
+  late bool _isEncrypted;
 
   factory CacheStrategyPackage() {
     return instance;
@@ -48,7 +49,7 @@ class CacheStrategyPackage {
       bool isEncrypted = false}) async {
     _cacheStorage = CacheStorage();
     _cacheManager = CacheManager(_cacheStorage, boxeName);
-    _isEncryptedTest = isEncrypted;
+    _isEncrypted = isEncrypted;
 
     assert(keyCache.isNotEmpty);
     assert(timeToLiveValue > 60000);
@@ -66,7 +67,11 @@ class CacheStrategyPackage {
   ///
   /// If other boxes are cached, **they will not be impacted**.
   Future<void> clearCache({String? keyCache}) async {
-    await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncryptedTest);
+    try {
+      await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncrypted);
+    } catch (e) {
+      throw CacheStrategyError("The data from $keyCache couldn't be deleted");
+    }
   }
 }
 

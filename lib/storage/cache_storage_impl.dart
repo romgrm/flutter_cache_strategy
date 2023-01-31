@@ -51,13 +51,6 @@ class CacheStorage implements Storage {
   }
 
   @override
-  Future<void> delete(String keyCache, String boxeName, bool isEncrypted) async {
-    if (isEncrypted) await setUpEncryption();
-    final box = await Hive.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
-    return box.delete(keyCache);
-  }
-
-  @override
   Future<String?> read(String keyCache, String boxeName, bool isEncrypted) async {
     if (isEncrypted) await setUpEncryption();
     final box = await Hive.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);

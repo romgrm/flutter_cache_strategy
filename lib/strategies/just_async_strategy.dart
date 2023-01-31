@@ -15,5 +15,5 @@ class JustAsyncStrategy extends CacheStrategy {
 
   @override
   Future<T?> applyStrategy<T>(AsyncBloc<T> asyncBloc, String keyCache, String boxeName, SerializerBloc<T> serializerBloc, int ttlValue, Storage storage, bool isEncrypted) async =>
-      await invokeAsync(asyncBloc, keyCache, boxeName, storage, isEncrypted);
+      await invokeAsync(asyncBloc, keyCache, boxeName, storage, isEncrypted).onError((error, stackTrace) => Future.error(error!));
 }

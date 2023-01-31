@@ -20,7 +20,13 @@ class EuropeanFoodRepository {
         timeToLiveValue: 140000,
         isEncrypted: true);
     final List<meal_dto.MealDto>? frenchFood = await _package.execute(
-        keyCache: "frenchFood", boxeName: "BOXE ENCRYPTED", serializer: (p0) => meal_dto.MealDto.fromData(p0), async: provider.getFrenchFood(), strategy: AsyncOrCacheStrategy(), isEncrypted: false);
+      keyCache: "frenchFood",
+      boxeName: "BOXE ENCRYPTED",
+      serializer: (p0) => meal_dto.MealDto.fromData(p0),
+      async: provider.getFrenchFood(),
+      strategy: AsyncOrCacheStrategy(),
+      isEncrypted: false,
+    );
 
     List<meal_dto.MealDto>? europeanFood = List.from(frenchFood ?? []);
     europeanFood.addAll(italianFood ?? []);
