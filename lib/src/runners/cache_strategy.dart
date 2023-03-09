@@ -19,7 +19,7 @@ abstract class CacheStrategy {
 
   _isValid<T>(CacheWrapper<T> cacheWrapper, bool keepExpiredCache, int ttlValue) => keepExpiredCache || DateTime.now().millisecondsSinceEpoch < cacheWrapper.cachedDate + ttlValue;
 
-  Future<T> invokeAsync<T>(AsyncBloc<T> asyncBloc, String keyCache, String boxeName, Storage storage, bool isEncrypted) async {
+  Future<T> invokeAsync<T>(AsyncBloc<T>? asyncBloc, String keyCache, String boxeName, Storage storage, bool isEncrypted) async {
     try {
       final asyncData = await asyncBloc;
       _storeCacheData(keyCache, boxeName, asyncData, storage, isEncrypted);
@@ -43,10 +43,10 @@ abstract class CacheStrategy {
         return null;
       }
     } catch (e) {
-      throw CacheStrategyError("An error appears with $keyCache from cache");
+      rethrow;
     }
     return null;
   }
 
-  Future<T?> applyStrategy<T>(AsyncBloc<T> asyncBloc, String keyCache, String boxeName, SerializerBloc serializerBloc, int ttlValue, Storage storage, bool isEncrypted);
+  Future<T?> applyStrategy<T>(AsyncBloc<T>? asyncBloc, String keyCache, String boxeName, SerializerBloc serializerBloc, int ttlValue, Storage storage, bool isEncrypted);
 }

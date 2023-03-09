@@ -15,7 +15,7 @@ class CacheOrAsyncStrategy extends CacheStrategy {
   CacheOrAsyncStrategy._internal();
 
   @override
-  Future<T?> applyStrategy<T>(AsyncBloc<T> asyncBloc, String keyCache, String boxeName, SerializerBloc<T> serializerBloc, int ttlValue, Storage storage, bool isEncrypted) async =>
+  Future<T?> applyStrategy<T>(AsyncBloc<T>? asyncBloc, String keyCache, String boxeName, SerializerBloc<T> serializerBloc, int ttlValue, Storage storage, bool isEncrypted) async =>
       await fetchCacheData(keyCache, boxeName, serializerBloc, storage, ttlValue, isEncrypted) ??
       await invokeAsync(asyncBloc, keyCache, boxeName, storage, isEncrypted).onError((error, stackTrace) => Future.error(error!));
 }
