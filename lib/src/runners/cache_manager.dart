@@ -34,7 +34,7 @@ class StrategyBuilder<T> {
   late String _boxeName;
   late int _ttlValue;
   late CacheStorage _cacheStorage;
-  late AsyncBloc<T> _asyncBloc;
+  late AsyncBloc<T>? _asyncBloc;
   late SerializerBloc<T> _serializerBloc;
   late CacheStrategy _strategy;
   late bool _isEncrypted;
@@ -44,7 +44,7 @@ class StrategyBuilder<T> {
     _cacheStorage = cacheStorage;
   }
 
-  StrategyBuilder withAsync(AsyncBloc<T> asyncBloc) {
+  StrategyBuilder withAsync(AsyncBloc<T>? asyncBloc) {
     _asyncBloc = asyncBloc;
     return this;
   }
