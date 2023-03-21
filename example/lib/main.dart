@@ -22,60 +22,103 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            body: Row(
-      children: [
-        Expanded(
-            child: FutureBuilder(
-                future: indianRepo.getIndianFood(),
-                builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: ((context, index) {
-                          return Text(snapshot.data![index].strMeal);
-                        }));
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                }))),
-        Expanded(
-            child: FutureBuilder(
-                future: europeanRepo.getEuropeanFood(),
-                builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: ((context, index) {
-                          return Text(snapshot.data![index].strMeal);
-                        }));
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                }))),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+            body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
           children: [
-            OutlinedButton(
-                onPressed: () {
-                  europeanRepo.clear(keyCache: "frenchFood");
-                  setState(() {});
-                },
-                child: const Text("clean just french food")),
-            OutlinedButton(
-                onPressed: () {
-                  europeanRepo.clear(keyCache: "italianFood");
-                  setState(() {});
-                },
-                child: const Text("clean just italian food")),
-            OutlinedButton(
-                onPressed: () {
-                  europeanRepo.clear();
-                  setState(() {});
-                },
-                child: const Text("clean just BOXE 1")),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                      child: FutureBuilder(
+                          future: indianRepo.getIndianFood(),
+                          builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(child: Text("An error appears"));
+                            } else if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: ((context, index) {
+                                    return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                  }));
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          }))),
+                  Expanded(
+                      child: FutureBuilder(
+                          future: europeanRepo.getEuropeanFood(),
+                          builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Center(child: Text("An error appears"));
+                            } else if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: ((context, index) {
+                                    return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                  }));
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          }))),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                      onPressed: () {
+                        europeanRepo.clear(keyCache: "frenchFood");
+                        setState(() {});
+                      },
+                      child: const Text("Remove French food from cache")),
+                  OutlinedButton(
+                      onPressed: () {
+                        europeanRepo.clear(keyCache: "italianFood");
+                        setState(() {});
+                      },
+                      child: const Text("Remove Italian food from cache")),
+                  OutlinedButton(
+                      onPressed: () {
+                        europeanRepo.clear();
+                        setState(() {});
+                      },
+                      child: const Text("Remove European food from cache")),
+                ],
+              ),
+            ),
           ],
         ),
-      ],
+      ),
     )));
+  }
+
+  Widget mealCard(String title, String thumb, String icon) {
+    return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 5,
+        margin: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Image.network(
+              thumb,
+            ),
+            ListTile(
+              title: Text(
+                title,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              leading: Image.asset(
+                icon,
+                width: 20,
+              ),
+            ),
+          ],
+        ));
   }
 }

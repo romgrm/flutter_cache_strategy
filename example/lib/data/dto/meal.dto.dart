@@ -8,11 +8,8 @@ class MealDto {
   String? idMeal;
   String? strMeal;
   String? strMealThumb;
-  MealDto({
-    this.idMeal,
-    this.strMeal,
-    this.strMealThumb,
-  });
+  String? strFlag;
+  MealDto({this.idMeal, this.strMeal, this.strMealThumb, this.strFlag});
 
   static List<MealDto> fromData(dynamic json) => List<MealDto>.from(json?.map<MealDto>((json) => MealDto.fromJson(json)));
 
@@ -20,5 +17,5 @@ class MealDto {
 
   Map<String, dynamic> toJson() => _$MealDtoToJson(this);
 
-  MealEntity toEntity() => MealEntity(idMeal: idMeal ?? "", strMeal: strMeal ?? "", strMealThumb: strMealThumb ?? "");
+  MealEntity toEntity() => MealEntity(idMeal: idMeal ?? "", strMeal: strMeal ?? "", strMealThumb: strMealThumb ?? "", strFlag: strFlag ?? "");
 }

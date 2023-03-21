@@ -76,10 +76,3 @@ class CacheStrategyPackage {
     }
   }
 }
-
-class MealDto {
-  String name;
-  MealDto({
-    required this.name,
-  });
-}
