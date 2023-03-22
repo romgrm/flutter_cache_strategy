@@ -53,13 +53,26 @@ class FlutterCacheStrategy {
     _cacheManager = CacheManager(_cacheStorage!, boxeName);
     _isEncrypted = isEncrypted;
 
-    assert(strategy is AsyncOrCacheStrategy || strategy is CacheOrAsyncStrategy || strategy is JustAsyncStrategy ? async != null : async == null || async != null,
+    assert(
+        strategy is AsyncOrCacheStrategy ||
+                strategy is CacheOrAsyncStrategy ||
+                strategy is JustAsyncStrategy
+            ? async != null
+            : async == null || async != null,
         "\n\nasync cannot be null if you want a remote strategy like $AsyncOrCacheStrategy | $CacheOrAsyncStrategy | $JustAsyncStrategy");
-    assert(keyCache.isNotEmpty, "\n\nkeyCache is used to store the data in the device and retrieve it easily, it cannot be empty");
+    assert(keyCache.isNotEmpty,
+        "\n\nkeyCache is used to store the data in the device and retrieve it easily, it cannot be empty");
     assert(timeToLiveValue > 60000);
 
     try {
-      return await _cacheManager.from<T>(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).withEncryption(isEncrypted).execute();
+      return await _cacheManager
+          .from<T>(keyCache)
+          .withSerializer(serializer)
+          .withAsync(async)
+          .withStrategy(strategy)
+          .withTtl(timeToLiveValue)
+          .withEncryption(isEncrypted)
+          .execute();
     } catch (e) {
       rethrow;
     }
@@ -72,7 +85,8 @@ class FlutterCacheStrategy {
   /// If other boxes are cached, **they will not be impacted**.
   Future<void> clearCache({String? keyCache}) async {
     try {
-      await _cacheManager.clear(keyCache: keyCache, isEncrypted: instance._isEncrypted);
+      await _cacheManager.clear(
+          keyCache: keyCache, isEncrypted: instance._isEncrypted);
     } catch (e) {
       throw CacheStrategyError("The data from $keyCache couldn't be deleted");
     }

@@ -47,9 +47,13 @@ class CacheStorage implements Storage {
   }
 
   @override
-  Future<void> clear({String? keyCache, required String boxeName, required bool isEncrypted}) async {
+  Future<void> clear(
+      {String? keyCache,
+      required String boxeName,
+      required bool isEncrypted}) async {
     if (isEncrypted) await setUpEncryption();
-    final box = await hiveInstance.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
+    final box = await hiveInstance.openBox(boxeName,
+        encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
     if (keyCache == null) {
       await box.clear();
     } else {
@@ -62,12 +66,17 @@ class CacheStorage implements Storage {
   }
 
   @override
-  Future<String?> read(String keyCache, String boxeName, bool isEncrypted) async {
+  Future<String?> read(
+      String keyCache, String boxeName, bool isEncrypted) async {
     appDir = await getApplicationDocumentsDirectory();
     bool isBoxExist = await hiveInstance.boxExists(boxeName, path: appDir.path);
     if (isBoxExist) {
       if (isEncrypted) await setUpEncryption();
-      final box = await hiveInstance.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null).onError((error, stackTrace) {
+      final box = await hiveInstance
+          .openBox(boxeName,
+              encryptionCipher:
+                  isEncrypted ? HiveAesCipher(encryptionKey) : null)
+          .onError((error, stackTrace) {
         throw error!;
       });
       return box.get(keyCache);
@@ -77,16 +86,22 @@ class CacheStorage implements Storage {
   }
 
   @override
-  Future<void> write(String keyCache, String value, String boxeName, bool isEncrypted) async {
+  Future<void> write(
+      String keyCache, String value, String boxeName, bool isEncrypted) async {
     if (isEncrypted) await setUpEncryption();
-    final box = await hiveInstance.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
+    final box = await hiveInstance.openBox(boxeName,
+        encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
     return box.put(keyCache, value);
   }
 
   @override
-  Future<int> count({String? keyCache, required String boxeName, required bool isEncrypted}) async {
+  Future<int> count(
+      {String? keyCache,
+      required String boxeName,
+      required bool isEncrypted}) async {
     if (isEncrypted) await setUpEncryption();
-    final box = await hiveInstance.openBox(boxeName, encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
+    final box = await hiveInstance.openBox(boxeName,
+        encryptionCipher: isEncrypted ? HiveAesCipher(encryptionKey) : null);
     if (keyCache == null) {
       return box.length;
     } else {

@@ -20,7 +20,8 @@ class RestException {
   static const String restErrorForbidden = "Forbidden";
   static const String restErrorUnexpected = "Unexpected error";
   static const String restErrorData = "Error with the data";
-  static const String restErrorUnableToProcess = "Unable to process the data further";
+  static const String restErrorUnableToProcess =
+      "Unable to process the data further";
 
   static RestException parseDioException(error) {
     if (error is Exception) {
@@ -43,30 +44,41 @@ class RestException {
             case DioErrorType.response:
               var responseCode = error.response?.statusCode;
               try {
-                final errors = List<ErrorDto>.from(error.response?.data['errors'].map<ErrorDto>((json) => ErrorDto.fromJson(json)));
+                final errors = List<ErrorDto>.from(error
+                    .response?.data['errors']
+                    .map<ErrorDto>((json) => ErrorDto.fromJson(json)));
                 switch (errors.first.code) {
                   case KnownError.missingParameters:
-                    restException = RestException(errors.first.code!.message, code: responseCode);
+                    restException = RestException(errors.first.code!.message,
+                        code: responseCode);
                     break;
                   default:
-                    restException = RestException("An issue was raised. Error code : $responseCode", code: responseCode);
+                    restException = RestException(
+                        "An issue was raised. Error code : $responseCode",
+                        code: responseCode);
                 }
               } catch (_) {
                 switch (responseCode) {
                   case 401:
-                    restException = RestException(restErrorUnauthorized, code: responseCode);
+                    restException = RestException(restErrorUnauthorized,
+                        code: responseCode);
                     break;
                   case 403:
-                    restException = RestException(restErrorForbidden, code: responseCode);
+                    restException =
+                        RestException(restErrorForbidden, code: responseCode);
                     break;
                   case 404:
-                    restException = RestException(restErrorNotFound, code: responseCode);
+                    restException =
+                        RestException(restErrorNotFound, code: responseCode);
                     break;
                   case 408:
-                    restException = RestException(restErrorTimeout, code: responseCode);
+                    restException =
+                        RestException(restErrorTimeout, code: responseCode);
                     break;
                   default:
-                    restException = RestException("An issue was raised. Error code : $responseCode", code: responseCode);
+                    restException = RestException(
+                        "An issue was raised. Error code : $responseCode",
+                        code: responseCode);
                 }
               }
               break;

@@ -17,7 +17,8 @@ class ErrorDto {
     required this.detail,
   });
 
-  factory ErrorDto.fromJson(Map<String, dynamic> json) => _$ErrorDtoFromJson(json);
+  factory ErrorDto.fromJson(Map<String, dynamic> json) =>
+      _$ErrorDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$ErrorDtoToJson(this);
 }
