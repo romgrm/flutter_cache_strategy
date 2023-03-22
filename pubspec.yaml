@@ -1,6 +1,6 @@
 name: flutter_cache_strategy
 description: A package to implement a complete caching strategy to handle the display of data for your users.
-version: 1.0.0+2
+version: 1.0.0+3
 repository: https://github.com/romgrm/flutter_cache_strategy
 homepage: https://github.com/romgrm/flutter_cache_strategy
 
