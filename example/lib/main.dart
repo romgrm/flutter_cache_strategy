@@ -35,9 +35,11 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                   Expanded(
                       child: FutureBuilder(
                           future: indianRepo.getIndianFood(),
-                          builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                          builder: ((context,
+                              AsyncSnapshot<List<MealEntity>> snapshot) {
                             if (snapshot.hasError) {
-                              RestException error = snapshot.error as RestException;
+                              RestException error =
+                                  snapshot.error as RestException;
                               return Center(child: Text(error.message));
                             } else if (snapshot.hasData) {
                               return RefreshIndicator(
@@ -45,7 +47,10 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                                 child: ListView.builder(
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: ((context, index) {
-                                      return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                      return mealCard(
+                                          snapshot.data![index].strMeal,
+                                          snapshot.data![index].strMealThumb,
+                                          snapshot.data![index].strFlag);
                                     })),
                               );
                             } else {
@@ -55,9 +60,11 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                   Expanded(
                       child: FutureBuilder(
                           future: europeanRepo.getEuropeanFood(),
-                          builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
+                          builder: ((context,
+                              AsyncSnapshot<List<MealEntity>> snapshot) {
                             if (snapshot.hasError) {
-                              RestException error = snapshot.error as RestException;
+                              RestException error =
+                                  snapshot.error as RestException;
                               return Center(child: Text(error.message));
                             } else if (snapshot.hasData) {
                               return RefreshIndicator(
@@ -65,7 +72,10 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                                 child: ListView.builder(
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: ((context, index) {
-                                      return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                      return mealCard(
+                                          snapshot.data![index].strMeal,
+                                          snapshot.data![index].strMealThumb,
+                                          snapshot.data![index].strFlag);
                                     })),
                               );
                             } else {

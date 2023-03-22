@@ -25,7 +25,8 @@ class IndianFoodRepository {
       for (var element in indianFood) {
         element.strFlag = "assets/icons/india.png";
       }
-      return List<MealEntity>.from(indianFood.map((mealDto) => mealDto.toEntity()));
+      return List<MealEntity>.from(
+          indianFood.map((mealDto) => mealDto.toEntity()));
     }
     return [];
   }

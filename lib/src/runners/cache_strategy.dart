@@ -35,7 +35,9 @@ abstract class CacheStrategy {
       if (value != null) {
         final cacheWrapper = CacheWrapper.fromJson(jsonDecode(value));
         if (_isValid(cacheWrapper, keepExpiredCache, ttlValue)) {
-          if (kDebugMode) print("Fetch cache data for key $keyCache: ${cacheWrapper.data}");
+          if (kDebugMode) {
+            print("Fetch cache data for key $keyCache: ${cacheWrapper.data}");
+          }
           return serializerBloc(cacheWrapper.data);
         }
       } else {

@@ -40,7 +40,8 @@ class EuropeanFoodRepository {
 
     List<MealDto>? europeanFood = [...?frenchFood, ...?italianFood];
 
-    return List<MealEntity>.from(europeanFood.map((mealDto) => mealDto.toEntity()));
+    return List<MealEntity>.from(
+        europeanFood.map((mealDto) => mealDto.toEntity()));
   }
 
   Future<void> clear({String? keyCache}) async {
