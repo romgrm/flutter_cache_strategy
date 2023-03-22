@@ -1,4 +1,8 @@
 # Changelog
+## 1.0.0+3
+
+- Reformat code for pass analysis
+
 ## 1.0.0+2
 
 - Reformat code 
