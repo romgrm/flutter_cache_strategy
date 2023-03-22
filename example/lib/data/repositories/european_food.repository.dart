@@ -4,17 +4,17 @@ import 'package:example/data/dto/meal.dto.dart';
 import 'package:flutter_cache_strategy/cache_strategy_package.dart';
 
 class EuropeanFoodRepository {
-  final provider = FetchDataImpl();
+  final _provider = FetchDataImpl();
 
   final _package = CacheStrategyPackage();
 
   Future<List<MealEntity>> getEuropeanFood() async {
     final List<MealDto>? italianFood = await _package
-        .execute(
+        .execute<List<MealDto>>(
             keyCache: "italianFood",
-            boxeName: "BOXE ENCRYPTED",
-            serializer: (p0) => MealDto.fromData(p0),
-            async: provider.getItalianFood(),
+            boxeName: "EUROPEAN BOXE",
+            serializer: (data) => MealDto.fromData(data),
+            async: _provider.getItalianFood(),
             strategy: AsyncOrCacheStrategy(),
             timeToLiveValue: 140000,
             isEncrypted: true)
@@ -22,13 +22,13 @@ class EuropeanFoodRepository {
       throw error ?? Error();
     });
     final List<MealDto>? frenchFood = await _package
-        .execute(
+        .execute<List<MealDto>>(
       keyCache: "frenchFood",
-      boxeName: "BOXE ENCRYPTED",
-      serializer: (p0) => MealDto.fromData(p0),
-      async: provider.getFrenchFood(),
+      boxeName: "EUROPEAN BOXE",
+      serializer: (data) => MealDto.fromData(data),
+      async: _provider.getFrenchFood(),
       strategy: AsyncOrCacheStrategy(),
-      isEncrypted: false,
+      isEncrypted: true,
     )
         .onError((error, stackTrace) {
       throw error ?? Error();
