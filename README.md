@@ -8,8 +8,8 @@
 
 ## Requirements 🖇️
 
-Dart sdk: ">=2.17.6 <3.0.0"
-Flutter: ">=3.3.8"
+- Dart sdk: ">=2.17.6 <3.0.0"
+- Flutter: ">=3.3.8"
 
 ## Usage ⚒️
 
