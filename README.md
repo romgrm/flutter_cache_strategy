@@ -29,7 +29,6 @@ You can use one of these 4 differents strategies :
 
 - **JustCacheStrategy** will only fetch cached data.
 
-<br>
 
 ```dart
     final _provider = FetchDataImpl();
@@ -60,21 +59,21 @@ And that's all !
 
 ![image](/example/assets/images/asyncOrCache_full.png)
 
-<br>
+
 - <ins>Now turn off the internet and pull down to refresh the lists, you'll still see the meals :</ins>
 <br>
 
 ![image](/example/assets/images/asyncOrCache_full.png)
 
-<br>
+
 - <ins>Now click on Remove French food from cache :</ins> 
 <br>
 
 ![image](/example/assets/images/asyncOrCache_without_french_food.png)
 
-<br>
+
 You can see now that the French food has been removed from the cache but the Italian food is still there.
-<br>
+
 - <ins>Now if you click on Remove European food from cache :</ins>
 <br>
 
