@@ -8,18 +8,27 @@ import 'cache_manager.dart';
 import 'cache_wrapper.dart';
 
 abstract class CacheStrategy {
-  Future _storeCacheData<T>(String keyCache, String boxeName, T value, Storage storage, bool isEncrypted) async {
-    final cacheWrapper = CacheWrapper<T>(value, DateTime.now().millisecondsSinceEpoch);
+  Future _storeCacheData<T>(String keyCache, String boxeName, T value,
+      Storage storage, bool isEncrypted) async {
+    final cacheWrapper =
+        CacheWrapper<T>(value, DateTime.now().millisecondsSinceEpoch);
     try {
-      await storage.write(keyCache, jsonEncode(cacheWrapper.toJsonObject()), boxeName, isEncrypted);
+      await storage.write(keyCache, jsonEncode(cacheWrapper.toJsonObject()),
+          boxeName, isEncrypted);
     } catch (e) {
-      throw CacheStrategyError("The data for $keyCache couldn't be stored in cache");
+      throw CacheStrategyError(
+          "The data for $keyCache couldn't be stored in cache");
     }
   }
 
-  _isValid<T>(CacheWrapper<T> cacheWrapper, bool keepExpiredCache, int ttlValue) => keepExpiredCache || DateTime.now().millisecondsSinceEpoch < cacheWrapper.cachedDate + ttlValue;
+  _isValid<T>(
+          CacheWrapper<T> cacheWrapper, bool keepExpiredCache, int ttlValue) =>
+      keepExpiredCache ||
+      DateTime.now().millisecondsSinceEpoch <
+          cacheWrapper.cachedDate + ttlValue;
 
-  Future<T> invokeAsync<T>(AsyncBloc<T>? asyncBloc, String keyCache, String boxeName, Storage storage, bool isEncrypted) async {
+  Future<T> invokeAsync<T>(AsyncBloc<T>? asyncBloc, String keyCache,
+      String boxeName, Storage storage, bool isEncrypted) async {
     try {
       final asyncData = await asyncBloc;
       _storeCacheData(keyCache, boxeName, asyncData, storage, isEncrypted);
@@ -29,7 +38,14 @@ abstract class CacheStrategy {
     }
   }
 
-  Future<T?> fetchCacheData<T>(String keyCache, String boxeName, SerializerBloc serializerBloc, Storage storage, int ttlValue, bool isEncrypted, {bool keepExpiredCache = false}) async {
+  Future<T?> fetchCacheData<T>(
+      String keyCache,
+      String boxeName,
+      SerializerBloc serializerBloc,
+      Storage storage,
+      int ttlValue,
+      bool isEncrypted,
+      {bool keepExpiredCache = false}) async {
     try {
       final value = await storage.read(keyCache, boxeName, isEncrypted);
       if (value != null) {
@@ -50,5 +66,12 @@ abstract class CacheStrategy {
     return null;
   }
 
-  Future<T?> applyStrategy<T>(AsyncBloc<T>? asyncBloc, String keyCache, String boxeName, SerializerBloc serializerBloc, int ttlValue, Storage storage, bool isEncrypted);
+  Future<T?> applyStrategy<T>(
+      AsyncBloc<T>? asyncBloc,
+      String keyCache,
+      String boxeName,
+      SerializerBloc serializerBloc,
+      int ttlValue,
+      Storage storage,
+      bool isEncrypted);
 }
