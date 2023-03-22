@@ -20,7 +20,7 @@ First you need to inject the `CacheStrategyPackage()` (it's a Singleton)
 
 Then, you can call `execute()` method and inject the parameters required depending on the strategy choosen (`boxeName`,`async`, `serializer`...)
 
-You can use 4 differents strategies : 
+You can use one of these 4 differents strategies : 
 
 - **AsyncOrCacheStrategy** which will first trigger a remote call to retrieve the data and store it in the device's cache. If the call generates an error at any point, the data in the cache will be retrieved.
 - **CacheOrAsyncStrategy** works in reverse to the above strategy, looking for cached data first and if null is returned then a remote call is triggered. 
@@ -81,16 +81,13 @@ You can see now that the French food has been removed from the cache but the Ita
 ![image](/example/assets/images/asyncOrCache_without_european_food.png)
 
 <br>
-There are no more European meals as this box has been cleaned of the cache but the Indian meals are still present as they are stored in a different box. 
+There are no more European meals since this box has been cleaned of the cache but the Indian meals are still present as they are stored in a different box. 
 
 ## Articles / Resources 📚
 
-This package is the completion of that [article](https://medium.com/@romaingreaume/implementing-a-cache-strategy-in-your-flutter-app-5db3e316e7c9) who I wrote. 
+This package is the completion of that [article](https://medium.com/@romaingreaume/implementing-a-cache-strategy-in-your-flutter-app-5db3e316e7c9) I wrote. 
 ## Pull requests ⬇️
 Pull requests are welcome, I'm a beginner so don't hesitate if you see any corrections.
-
-
-
 
 ## Additional information 
 
