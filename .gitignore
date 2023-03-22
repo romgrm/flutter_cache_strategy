@@ -31,3 +31,6 @@ migrate_working_dir/
 .packages
 build/
 
+
+# Fvm sdk 
+.fvm/flutter_sdk
