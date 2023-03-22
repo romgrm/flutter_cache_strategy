@@ -13,14 +13,14 @@ class RestException {
   @override
   String toString() => message;
 
-  static const String restErrorTimeout = "La connexion a été perdue";
-  static const String restErrorNoConnection = "Pas de connexion internet";
-  static const String restErrorNotFound = "La donnée n'a pas été trouvée";
-  static const String restErrorUnauthorized = "Votre session a expirée, veuillez vous reconnecter";
-  static const String restErrorForbidden = "Vous n'êtes pas autorisé à consulter cette donnée";
-  static const String restErrorUnexpected = "Oups, une erreur est survenue";
-  static const String restErrorData = "Erreur de données";
-  static const String restErrorUnableToProcess = "Impossible de traiter les données";
+  static const String restErrorTimeout = "The connection has been lost ";
+  static const String restErrorNoConnection = "No internet connection";
+  static const String restErrorNotFound = "The data wasn't found";
+  static const String restErrorUnauthorized = "Unauthorized";
+  static const String restErrorForbidden = "Forbidden";
+  static const String restErrorUnexpected = "Unexpected error";
+  static const String restErrorData = "Error with the data";
+  static const String restErrorUnableToProcess = "Unable to process the data further";
 
   static RestException parseDioException(error) {
     if (error is Exception) {
@@ -29,7 +29,7 @@ class RestException {
         if (error is DioError) {
           switch (error.type) {
             case DioErrorType.cancel:
-              restException = RestException("Requête annulée");
+              restException = RestException("Cancel request");
               break;
             case DioErrorType.connectTimeout:
               restException = RestException(restErrorTimeout);
@@ -49,7 +49,7 @@ class RestException {
                     restException = RestException(errors.first.code!.message, code: responseCode);
                     break;
                   default:
-                    restException = RestException("Un problème a été rencontré, nous mettons tout en oeuvre pour le résoudre. Code erreur : $responseCode", code: responseCode);
+                    restException = RestException("An issue was raised. Error code : $responseCode", code: responseCode);
                 }
               } catch (_) {
                 switch (responseCode) {
@@ -66,7 +66,7 @@ class RestException {
                     restException = RestException(restErrorTimeout, code: responseCode);
                     break;
                   default:
-                    restException = RestException("Un problème a été rencontré, nous mettons tout en oeuvre pour le résoudre. Code erreur : $responseCode", code: responseCode);
+                    restException = RestException("An issue was raised. Error code : $responseCode", code: responseCode);
                 }
               }
               break;

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:hive_flutter/adapters.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:example/core/rest/rest_exception.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/repositories/european_food.repository.dart';
 import 'package:example/data/repositories/indian_food.repository.dart';
@@ -36,7 +37,8 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                           future: indianRepo.getIndianFood(),
                           builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
                             if (snapshot.hasError) {
-                              return const Center(child: Text("An error appears"));
+                              RestException error = snapshot.error as RestException;
+                              return Center(child: Text(error.message));
                             } else if (snapshot.hasData) {
                               return RefreshIndicator(
                                 onRefresh: () => indianRepo.getIndianFood(),
@@ -55,7 +57,8 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                           future: europeanRepo.getEuropeanFood(),
                           builder: ((context, AsyncSnapshot<List<MealEntity>> snapshot) {
                             if (snapshot.hasError) {
-                              return const Center(child: Text("An error appears"));
+                              RestException error = snapshot.error as RestException;
+                              return Center(child: Text(error.message));
                             } else if (snapshot.hasData) {
                               return RefreshIndicator(
                                 onRefresh: () => europeanRepo.getEuropeanFood(),

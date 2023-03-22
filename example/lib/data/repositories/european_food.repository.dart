@@ -1,3 +1,4 @@
+import 'package:example/core/rest/rest_exception.dart';
 import 'package:example/data/datasource/fetch_data_impl.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/dto/meal.dto.dart';
@@ -19,7 +20,7 @@ class EuropeanFoodRepository {
             timeToLiveValue: 140000,
             isEncrypted: true)
         .onError((error, stackTrace) {
-      throw error ?? Error();
+      throw error as RestException;
     });
     final List<MealDto>? frenchFood = await _package
         .execute<List<MealDto>>(
@@ -31,7 +32,7 @@ class EuropeanFoodRepository {
       isEncrypted: true,
     )
         .onError((error, stackTrace) {
-      throw error ?? Error();
+      throw error as RestException;
     });
 
     frenchFood?.forEach((e) => e.strFlag = "assets/icons/france.png");
