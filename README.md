@@ -57,19 +57,19 @@ And that's all !
 - <ins>When it's set on AsyncOrCacheStrategy :</ins> 
 <br>
 
-![image](/example/assets/images/asyncOrCache_full.png)
+![image](https://github.com/romgrm/flutter_cache_strategy/blob/master/example/assets/images/asyncOrCache_full.png)
 
 
 - <ins>Now turn off the internet and pull down to refresh the lists, you'll still see the meals :</ins>
 <br>
 
-![image](/example/assets/images/asyncOrCache_full.png)
+![image](https://github.com/romgrm/flutter_cache_strategy/blob/master/example/assets/images/asyncOrCache_full.png)
 
 
 - <ins>Now click on Remove French food from cache :</ins> 
 <br>
 
-![image](/example/assets/images/asyncOrCache_without_french_food.png)
+![image](https://github.com/romgrm/flutter_cache_strategy/blob/develop/example/assets/images/asyncOrCache_without_french_food.png)
 
 
 You can see now that the French food has been removed from the cache but the Italian food is still there.
@@ -77,7 +77,7 @@ You can see now that the French food has been removed from the cache but the Ita
 - <ins>Now if you click on Remove European food from cache :</ins>
 <br>
 
-![image](/example/assets/images/asyncOrCache_without_european_food.png)
+![image](https://github.com/romgrm/flutter_cache_strategy/blob/develop/example/assets/images/asyncOrCache_without_european_food.png)
 
 <br>
 There are no more European meals since this box has been cleaned of the cache but the Indian meals are still present as they are stored in a different box. 
