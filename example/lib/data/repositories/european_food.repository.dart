@@ -2,12 +2,12 @@ import 'package:example/core/rest/rest_exception.dart';
 import 'package:example/data/datasource/fetch_data_impl.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/dto/meal.dto.dart';
-import 'package:flutter_cache_strategy/cache_strategy_package.dart';
+import 'package:flutter_cache_strategy/flutter_cache_strategy.dart';
 
 class EuropeanFoodRepository {
   final _provider = FetchDataImpl();
 
-  final _package = CacheStrategyPackage();
+  final _package = FlutterCacheStrategy();
 
   Future<List<MealEntity>> getEuropeanFood() async {
     final List<MealDto>? italianFood = await _package

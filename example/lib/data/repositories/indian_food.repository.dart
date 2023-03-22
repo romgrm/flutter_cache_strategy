@@ -1,14 +1,15 @@
 import 'package:example/data/datasource/fetch_data_impl.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/dto/meal.dto.dart';
-
-import 'package:flutter_cache_strategy/cache_strategy_package.dart';
+import 'package:flutter_cache_strategy/flutter_cache_strategy.dart';
 
 class IndianFoodRepository {
   final provider = FetchDataImpl();
 
+  final _package = FlutterCacheStrategy();
+
   Future<List<MealEntity>> getIndianFood() async {
-    final List<MealDto>? indianFood = await CacheStrategyPackage.instance
+    final List<MealDto>? indianFood = await _package
         .execute<List<MealDto>>(
       keyCache: "indianFood",
       boxeName: "INDIAN BOXE",

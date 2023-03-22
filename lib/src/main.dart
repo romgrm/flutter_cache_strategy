@@ -9,18 +9,18 @@ import 'strategies/just_async_strategy.dart';
 import 'strategies/just_cache_strategy.dart';
 import 'utils/cache_strategy_error.dart';
 
-class CacheStrategyPackage {
+class FlutterCacheStrategy {
   late CacheStorage? _cacheStorage;
   static late CacheManager _cacheManager;
   late bool _isEncrypted;
 
-  factory CacheStrategyPackage() {
+  factory FlutterCacheStrategy() {
     return instance;
   }
 
-  CacheStrategyPackage._internal();
+  FlutterCacheStrategy._internal();
 
-  static final CacheStrategyPackage instance = CacheStrategyPackage._internal();
+  static final FlutterCacheStrategy instance = FlutterCacheStrategy._internal();
 
   /// **[keyCache]** The key that references the data stored in the cache. A *keyCache* should be unique to each value. If it's not, values that have the same keyCache are combined.
   /// You can create a cache session with multiple store objects that each have a *keyCache*, but are combined into a single *boxeName*.

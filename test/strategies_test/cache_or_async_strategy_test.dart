@@ -1,8 +1,6 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'dart:convert';
 
-import 'package:flutter_cache_strategy/cache_strategy_package.dart';
+import 'package:flutter_cache_strategy/flutter_cache_strategy.dart';
 import 'package:flutter_cache_strategy/src/runners/cache_wrapper.dart';
 import 'package:flutter_cache_strategy/src/storage/cache_storage_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
