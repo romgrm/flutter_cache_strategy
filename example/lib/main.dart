@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/data/domain/meal.entity.dart';
 import 'package:example/data/repositories/european_food.repository.dart';
 import 'package:example/data/repositories/indian_food.repository.dart';
@@ -37,11 +38,14 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                             if (snapshot.hasError) {
                               return const Center(child: Text("An error appears"));
                             } else if (snapshot.hasData) {
-                              return ListView.builder(
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: ((context, index) {
-                                    return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
-                                  }));
+                              return RefreshIndicator(
+                                onRefresh: () => indianRepo.getIndianFood(),
+                                child: ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                    })),
+                              );
                             } else {
                               return const CircularProgressIndicator();
                             }
@@ -53,11 +57,14 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
                             if (snapshot.hasError) {
                               return const Center(child: Text("An error appears"));
                             } else if (snapshot.hasData) {
-                              return ListView.builder(
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: ((context, index) {
-                                    return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
-                                  }));
+                              return RefreshIndicator(
+                                onRefresh: () => europeanRepo.getEuropeanFood(),
+                                child: ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return mealCard(snapshot.data![index].strMeal, snapshot.data![index].strMealThumb, snapshot.data![index].strFlag);
+                                    })),
+                              );
                             } else {
                               return const CircularProgressIndicator();
                             }
@@ -104,8 +111,8 @@ class _CacheStrategyExampleState extends State<CacheStrategyExample> {
         margin: const EdgeInsets.all(5),
         child: Column(
           children: [
-            Image.network(
-              thumb,
+            CachedNetworkImage(
+              imageUrl: thumb,
             ),
             ListTile(
               title: Text(
