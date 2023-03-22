@@ -29,17 +29,28 @@ void main() {
         // arrange
         Future<CacheValueDto> tryAsync() async => cacheValueDto;
 
-        when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null)).thenAnswer((_) async => _mockHiveBox);
+        when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null))
+            .thenAnswer((_) async => _mockHiveBox);
 
-        when(() => _mockHiveBox.put(any(), any())).thenAnswer((realInvocation) async => Future<void>);
+        when(() => _mockHiveBox.put(any(), any()))
+            .thenAnswer((realInvocation) async => Future<void>);
 
         CacheStorage storage = CacheStorage.testing(_mockHiveInterface);
 
         // act
-        final result = await _cacheStrategy.applyStrategy(tryAsync(), keyCache, boxeName, (value) => CacheValueDto.fromJson(value), 3600000, storage, false);
+        final result = await _cacheStrategy.applyStrategy(
+            tryAsync(),
+            keyCache,
+            boxeName,
+            (value) => CacheValueDto.fromJson(value),
+            3600000,
+            storage,
+            false);
 
         // assert
-        verify(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null)).called(1);
+        verify(() =>
+                _mockHiveInterface.openBox(boxeName, encryptionCipher: null))
+            .called(1);
         expect(result, isA<CacheValueDto>());
         expect(result, cacheValueDto);
         _mockHiveInterface.resetAdapters();
@@ -54,7 +65,16 @@ void main() {
         CacheStorage storage = CacheStorage.testing(_mockHiveInterface);
 
         // act && assert
-        expect(() => _cacheStrategy.applyStrategy(tryAsync(), keyCache, boxeName, (value) => CacheValueDto.fromJson(value), 3600000, storage, false), throwsA(isA<Error>()));
+        expect(
+            () => _cacheStrategy.applyStrategy(
+                tryAsync(),
+                keyCache,
+                boxeName,
+                (value) => CacheValueDto.fromJson(value),
+                3600000,
+                storage,
+                false),
+            throwsA(isA<Error>()));
         _mockHiveInterface.resetAdapters();
       },
     );

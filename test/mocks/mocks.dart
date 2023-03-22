@@ -8,7 +8,9 @@ class MockHiveInterface extends Mock implements HiveInterface {}
 
 class MockHiveBox extends Mock implements Box {}
 
-class FakePathProviderPlatform extends Fake with MockPlatformInterfaceMixin implements PathProviderPlatform {
+class FakePathProviderPlatform extends Fake
+    with MockPlatformInterfaceMixin
+    implements PathProviderPlatform {
   @override
   Future<String?> getApplicationDocumentsPath() async {
     return 'your path';

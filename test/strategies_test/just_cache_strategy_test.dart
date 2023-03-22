@@ -34,18 +34,30 @@ void main() {
     'should return value from cache if there is a value',
     () async {
       // arrange
-      final cacheWrapper = CacheWrapper<CacheValueDto>(cacheValueDto, DateTime.now().millisecondsSinceEpoch);
+      final cacheWrapper = CacheWrapper<CacheValueDto>(
+          cacheValueDto, DateTime.now().millisecondsSinceEpoch);
       String jsonEncodeValue = jsonEncode(cacheWrapper.toJsonObject());
 
-      when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null)).thenAnswer((_) async => _mockHiveBox);
-      when(() => _mockHiveInterface.boxExists(boxeName, path: any(named: "path"))).thenAnswer((invocation) => Future.value(true));
+      when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null))
+          .thenAnswer((_) async => _mockHiveBox);
+      when(() =>
+              _mockHiveInterface.boxExists(boxeName, path: any(named: "path")))
+          .thenAnswer((invocation) => Future.value(true));
 
-      when(() => _mockHiveBox.get(any())).thenAnswer((invocation) => Future.value(jsonEncodeValue));
+      when(() => _mockHiveBox.get(any()))
+          .thenAnswer((invocation) => Future.value(jsonEncodeValue));
 
       CacheStorage storage = CacheStorage.testing(_mockHiveInterface);
 
       // act
-      final result = await _cacheStrategy.applyStrategy(null, keyCache, boxeName, (value) => CacheValueDto.fromJson(value), 3600000, storage, false);
+      final result = await _cacheStrategy.applyStrategy(
+          null,
+          keyCache,
+          boxeName,
+          (value) => CacheValueDto.fromJson(value),
+          3600000,
+          storage,
+          false);
 
       // assert
       expect(result, isA<CacheValueDto>());
@@ -57,13 +69,25 @@ void main() {
     () async {
       // arrange
 
-      when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null)).thenAnswer((_) async => _mockHiveBox);
-      when(() => _mockHiveInterface.boxExists(boxeName, path: any(named: "path"))).thenAnswer((invocation) => Future.value(false));
+      when(() => _mockHiveInterface.openBox(boxeName, encryptionCipher: null))
+          .thenAnswer((_) async => _mockHiveBox);
+      when(() =>
+              _mockHiveInterface.boxExists(boxeName, path: any(named: "path")))
+          .thenAnswer((invocation) => Future.value(false));
 
       CacheStorage storage = CacheStorage.testing(_mockHiveInterface);
 
       // act && assert
-      expect(() => _cacheStrategy.applyStrategy(null, keyCache, boxeName, (value) => CacheValueDto.fromJson(value), 3600000, storage, false), throwsA(isA<Error>()));
+      expect(
+          () => _cacheStrategy.applyStrategy(
+              null,
+              keyCache,
+              boxeName,
+              (value) => CacheValueDto.fromJson(value),
+              3600000,
+              storage,
+              false),
+          throwsA(isA<Error>()));
 
       _mockHiveInterface.resetAdapters();
     },

@@ -11,11 +11,17 @@ class MealDto {
   String? strFlag;
   MealDto({this.idMeal, this.strMeal, this.strMealThumb, this.strFlag});
 
-  static List<MealDto> fromData(dynamic json) => List<MealDto>.from(json?.map<MealDto>((json) => MealDto.fromJson(json)));
+  static List<MealDto> fromData(dynamic json) =>
+      List<MealDto>.from(json?.map<MealDto>((json) => MealDto.fromJson(json)));
 
-  factory MealDto.fromJson(Map<String, dynamic> json) => _$MealDtoFromJson(json);
+  factory MealDto.fromJson(Map<String, dynamic> json) =>
+      _$MealDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$MealDtoToJson(this);
 
-  MealEntity toEntity() => MealEntity(idMeal: idMeal ?? "", strMeal: strMeal ?? "", strMealThumb: strMealThumb ?? "", strFlag: strFlag ?? "");
+  MealEntity toEntity() => MealEntity(
+      idMeal: idMeal ?? "",
+      strMeal: strMeal ?? "",
+      strMealThumb: strMealThumb ?? "",
+      strFlag: strFlag ?? "");
 }
