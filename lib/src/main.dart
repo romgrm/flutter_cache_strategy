@@ -38,7 +38,7 @@ class CacheStrategyPackage {
   ///
   /// **[isEncrypted]** If it set on *true*, the boxe where stored data will be encrypted with [HiveAesCipher].
   ///
-  Future execute({
+  Future execute<T>({
     required String keyCache,
     String? boxeName,
     required SerializerBloc serializer,
@@ -57,7 +57,7 @@ class CacheStrategyPackage {
     assert(timeToLiveValue > 60000);
 
     try {
-      return await _cacheManager.from(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).withEncryption(isEncrypted).execute();
+      return await _cacheManager.from<T>(keyCache).withSerializer(serializer).withAsync(async).withStrategy(strategy).withTtl(timeToLiveValue).withEncryption(isEncrypted).execute();
     } catch (e) {
       rethrow;
     }
