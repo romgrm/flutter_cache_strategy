@@ -57,7 +57,7 @@ And that's all !
 
 - <ins>When it's set on AsyncOrCacheStrategy :</ins> 
 <br>
-![image](./example/assets/images/asyncOrCache_full.png)
+![image](/example/assets/images/asyncOrCache_full.png)
 <br>
 - <ins>Now turn off the internet and pull down to refresh the lists, you'll still see the meals :</ins>
 <br>
